@@ -524,57 +524,36 @@ if ( ! function_exists('make_slug')) {
 /*
  * Helpers for working with ACF data objects
  */
-if (class_exists('Arr')) {
-    if ( ! function_exists('_get')) {
-        /**
-         * @param $haystack
-         * @param $needle
-         * @param  null  $default
-         *
-         * @return mixed
-         */
-        function _get($haystack, $needle, $default = null)
-        {
-            return Arr::get($haystack, $needle, $default);
-        }
-    }
 
-    if ( ! function_exists('_has')) {
-        /**
-         * @param $haystack
-         * @param $needle
-         * @param  false  $default
-         *
-         * @return bool|mixed
-         */
-        function _has($haystack, $needle, $default = false)
-        {
-            if (Arr::get($haystack, $needle, false)) {
-                return true;
-            }
-
-            return $default;
-        }
-    }
-} else {
+if ( ! function_exists('_get')) {
     /**
      * @param $haystack
      * @param $needle
      * @param  null  $default
+     *
+     * @return mixed
      */
     function _get($haystack, $needle, $default = null)
     {
-        echo "Run composer install";
+        return Arr::get($haystack, $needle, $default);
     }
+}
 
+if ( ! function_exists('_has')) {
     /**
      * @param $haystack
      * @param $needle
-     * @param  null  $default
+     * @param  false  $default
+     *
+     * @return bool|mixed
      */
     function _has($haystack, $needle, $default = false)
     {
-        echo "Run composer install";
+        if (Arr::has($haystack, $needle, false) && Arr::get($haystack, $needle, false) !== '') {
+            return true;
+        }
+
+        return $default;
     }
 }
 
