@@ -135,9 +135,11 @@ if ( ! function_exists('__video')) {
  *
  * @return string
  */
-function underscore($string)
-{
-    return strtolower(preg_replace('/[[:space:]]+/', '_', $string));
+if ( ! function_exists('underscore')) {
+    function underscore($string)
+    {
+        return strtolower(preg_replace('/[[:space:]]+/', '_', $string));
+    }
 }
 
 /**
@@ -145,9 +147,11 @@ function underscore($string)
  *
  * @return string
  */
-function dash($string)
-{
-    return strtolower(preg_replace('/[[:space:]]+/', '-', $string));
+if ( ! function_exists('dash')) {
+    function dash($string)
+    {
+        return strtolower(preg_replace('/[[:space:]]+/', '-', $string));
+    }
 }
 
 /**
@@ -158,20 +162,22 @@ function dash($string)
  *
  * @return array
  */
-function get_cat_hierarchy($parent, $args)
-{
-    $cats = get_categories($args);
-    $ret  = new stdClass;
+if ( ! function_exists('get_cat_hierarchy')) {
+    function get_cat_hierarchy($parent, $args)
+    {
+        $cats = get_categories($args);
+        $ret  = new stdClass;
 
-    foreach ($cats as $cat) {
-        if ($cat->parent == $parent) {
-            $id                 = $cat->cat_ID;
-            $ret->$id           = $cat;
-            $ret->$id->children = get_cat_hierarchy($id, $args);
+        foreach ($cats as $cat) {
+            if ($cat->parent == $parent) {
+                $id                 = $cat->cat_ID;
+                $ret->$id           = $cat;
+                $ret->$id->children = get_cat_hierarchy($id, $args);
+            }
         }
-    }
 
-    return (array) $ret;
+        return (array) $ret;
+    }
 }
 
 /**
@@ -183,28 +189,30 @@ function get_cat_hierarchy($parent, $args)
  *
  * @return string
  */
-function get_template_part_acf($slug, $name = null)
-{
-    $templates = [];
-    $name      = (string) $name;
+if ( ! function_exists('get_template_part_acf')) {
+    function get_template_part_acf($slug, $name = null)
+    {
+        $templates = [];
+        $name      = (string) $name;
 
-    if ($name == null) {
-        $templates[] = "{$slug}.php";
-    } else {
-        $templates[] = "{$slug}-{$name}.php";
-    }
-
-    $located = '';
-    foreach ((array) $templates as $template_name) {
-        if ( ! $template_name) {
-            continue;
+        if ($name == null) {
+            $templates[] = "{$slug}.php";
+        } else {
+            $templates[] = "{$slug}-{$name}.php";
         }
-        if (template_directory($template_name)) {
-            $located = template_directory($template_name);
-        }
-    }
 
-    return $located;
+        $located = '';
+        foreach ((array) $templates as $template_name) {
+            if ( ! $template_name) {
+                continue;
+            }
+            if (template_directory($template_name)) {
+                $located = template_directory($template_name);
+            }
+        }
+
+        return $located;
+    }
 }
 
 /**
@@ -212,13 +220,15 @@ function get_template_part_acf($slug, $name = null)
  *
  * @return string
  */
-function check_path($template_name)
-{
-    if (file_exists(get_stylesheet_directory().'/'.$template_name) or file_exists(get_template_directory().'/'.$template_name)) {
-        return get_template_directory().'/'.$template_name;
-    }
+if ( ! function_exists('check_path')) {
+    function check_path($template_name)
+    {
+        if (file_exists(get_stylesheet_directory().'/'.$template_name) or file_exists(get_template_directory().'/'.$template_name)) {
+            return get_template_directory().'/'.$template_name;
+        }
 
-    return false;
+        return false;
+    }
 }
 
 /**
@@ -226,19 +236,21 @@ function check_path($template_name)
  *
  * @return bool|string
  */
-function template_directory($template_name)
-{
-    $template_name = trim($template_name, "/");
+if ( ! function_exists('template_directory')) {
+    function template_directory($template_name)
+    {
+        $template_name = trim($template_name, "/");
 
-    if (file_exists(get_stylesheet_directory().'/'.$template_name)) {
-        return get_stylesheet_directory().'/'.$template_name;
+        if (file_exists(get_stylesheet_directory().'/'.$template_name)) {
+            return get_stylesheet_directory().'/'.$template_name;
+        }
+
+        if (file_exists(get_template_directory().'/'.$template_name)) {
+            return get_template_directory().'/'.$template_name;
+        }
+
+        return false;
     }
-
-    if (file_exists(get_template_directory().'/'.$template_name)) {
-        return get_template_directory().'/'.$template_name;
-    }
-
-    return false;
 }
 
 if ( ! function_exists('__m')) {
@@ -444,91 +456,105 @@ if ( ! function_exists('if_custom_logo')) {
     }
 }
 
-function word_count()
-{
-    global $post;
-    //Variable: Additional characters which will be considered as a 'word'
-    $char_list = '';
-    /** MODIFY IF YOU LIKE.  Add characters inside the single quotes. **/ //$char_list = '0123456789'; /** If you want to count numbers as 'words' **/
-    //$char_list = '&@'; /** If you want count certain symbols as 'words' **/
-    return str_word_count(strip_tags($post->post_content), 0, $char_list);
-}
-
-/**
- * @return float
- *
- * <p><?= read_time() ?> minute read</p>
- */
-function read_time()
-{
-    $words = word_count();
-
-    return ceil($words / 200);
-}
-
-function is_developer()
-{
-    if (is_user_logged_in()) {
-        $user = wp_get_current_user();
-
-        return in_array('developer', $user->roles);
-    }
-
-    return false;
-}
-
-function hide_adminbar_for_developers()
-{
-    if (is_developer()) {
-        add_filter('show_admin_bar', '__return_false');
+if ( ! function_exists('word_count')) {
+    function word_count()
+    {
+        global $post;
+        //Variable: Additional characters which will be considered as a 'word'
+        $char_list = '';
+        /** MODIFY IF YOU LIKE.  Add characters inside the single quotes. **/ //$char_list = '0123456789'; /** If you want to count numbers as 'words' **/
+        //$char_list = '&@'; /** If you want count certain symbols as 'words' **/
+        return str_word_count(strip_tags($post->post_content), 0, $char_list);
     }
 }
 
-/**
- * @param $string
- *
- * @return string
- */
-function make_slug($string)
-{
-    $string = str_replace('#', '', $string);
+if ( ! function_exists('read_time')) {
+    /**
+     * @return float
+     *
+     * <p><?= read_time() ?> minute read</p>
+     */
+    function read_time()
+    {
+        $words = word_count();
 
-    // Remove accented letters
-    $string = iconv('UTF-8','ASCII//TRANSLIT',$string);
+        return ceil($words / 200);
+    }
+}
 
-    return strtolower(preg_replace('/[[:space:]]+/', '_', $string));
+if ( ! function_exists('is_developer')) {
+    function is_developer()
+    {
+        if (is_user_logged_in()) {
+            $user = wp_get_current_user();
+
+            return in_array('developer', $user->roles);
+        }
+
+        return false;
+    }
+}
+
+if ( ! function_exists('hide_adminbar_for_developers')) {
+    function hide_adminbar_for_developers()
+    {
+        if (is_developer()) {
+            add_filter('show_admin_bar', '__return_false');
+        }
+    }
+}
+
+if ( ! function_exists('make_slug')) {
+    /**
+     * @param $string
+     *
+     * @return string
+     */
+    function make_slug($string)
+    {
+        $string = str_replace('#', '', $string);
+
+        // Remove accented letters
+        $string = iconv('UTF-8', 'ASCII//TRANSLIT', $string);
+
+        return strtolower(preg_replace('/[[:space:]]+/', '_', $string));
+    }
 }
 
 /*
  * Helpers for working with ACF data objects
  */
 if (class_exists('Arr')) {
-    /**
-     * @param $haystack
-     * @param $needle
-     * @param  null  $default
-     *
-     * @return mixed
-     */
-    function _get($haystack, $needle, $default = null)
-    {
-        return Arr::get($haystack, $needle, $default);
+    if ( ! function_exists('_get')) {
+        /**
+         * @param $haystack
+         * @param $needle
+         * @param  null  $default
+         *
+         * @return mixed
+         */
+        function _get($haystack, $needle, $default = null)
+        {
+            return Arr::get($haystack, $needle, $default);
+        }
     }
 
-    /**
-     * @param $haystack
-     * @param $needle
-     * @param  false  $default
-     *
-     * @return bool|mixed
-     */
-    function _has($haystack, $needle, $default = false)
-    {
-        if (Arr::get($haystack, $needle, false)) {
-            return true;
-        }
+    if ( ! function_exists('_has')) {
+        /**
+         * @param $haystack
+         * @param $needle
+         * @param  false  $default
+         *
+         * @return bool|mixed
+         */
+        function _has($haystack, $needle, $default = false)
+        {
+            if (Arr::get($haystack, $needle, false)) {
+                return true;
+            }
 
-        return $default;
+            return $default;
+        }
     }
 } else {
     /**
@@ -552,15 +578,17 @@ if (class_exists('Arr')) {
     }
 }
 
-function setBaseDataPath()
-{
-    if (file_exists(get_stylesheet_directory().'/lib/data.php')) {
-        define('__THEME_DATA__', get_stylesheet_directory());
-        return;
-    }
+if ( ! function_exists('setBaseDataPath')) {
+    function setBaseDataPath()
+    {
+        if (file_exists(get_stylesheet_directory().'/lib/data.php')) {
+            define('__THEME_DATA__', get_stylesheet_directory());
+            return;
+        }
 
-    if (file_exists(get_template_directory().'/lib/data.php')) {
-        define('__THEME_DATA__', get_template_directory());
-        return;
+        if (file_exists(get_template_directory().'/lib/data.php')) {
+            define('__THEME_DATA__', get_template_directory());
+            return;
+        }
     }
 }
