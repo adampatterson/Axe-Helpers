@@ -5,6 +5,7 @@
       "WordPress",
       "helpers"
     ],
+    "license": "MIT",
     "type": "library",
     "authors": [
       {
