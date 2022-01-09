@@ -1,6 +1,7 @@
 <?php
 /****************************************
- * Theme Helpers
+ * Theme Helpers for Axe
+ * https://github.com/adampatterson/Axe
  *****************************************/
 
 use Carbon\Carbon;
