@@ -1,2 +1,2 @@
-# Axe-Helpers
-Theme Helpers for Axe
+# Axe Helpers
+Theme Helpers for [Axe](https://github.com/adampatterson/Axe)
