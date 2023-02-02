@@ -101,10 +101,9 @@ if ( ! function_exists('mix')) {
      */
     function mix($path, $useParent = false)
     {
-        $pathWithOutSlash  = ltrim($path, '/');
-        $pathWithSlash     = '/'.ltrim($path, '/');
-        $pathWithOutAssets = '/'.ltrim($pathWithSlash, '/assets');
-        $manifestFile      = __m($useParent);
+        $pathWithOutSlash = ltrim($path, '/');
+        $pathWithSlash    = '/'.ltrim($path, '/');
+        $manifestFile     = __m($useParent);
 
 //        No manifest file was found so return whatever was passed to mix().
         if ( ! $manifestFile) {
@@ -113,10 +112,16 @@ if ( ! function_exists('mix')) {
 
         $manifestArray = json_decode(file_get_contents($manifestFile), true);
 
-        if (array_key_exists($pathWithOutAssets, $manifestArray)) {
-            return __t($useParent).'assets/'.ltrim($manifestArray[$pathWithOutAssets], '/');
-        }
+        /*
+                $pathWithOutAssets = '/'.ltrim($pathWithSlash, '/assets');
+                if (array_key_exists($pathWithOutAssets, $manifestArray)) {
+                    return __t($useParent).'assets/'.ltrim($manifestArray[$pathWithOutAssets], '/');
+                }
+        */
 
+        if (array_key_exists($pathWithSlash, $manifestArray)) {
+            return __t($useParent).ltrim($manifestArray[$pathWithSlash], '/');
+        }
 //        No file was found in the manifest, return whatever was passed to mix().
         return __t($useParent).$pathWithOutSlash;
     }
@@ -281,34 +286,6 @@ if ( ! function_exists('__m')) {
         }
 
         return false;
-    }
-}
-
-if ( ! function_exists('mix')) {
-    /**
-     * @param $path
-     *
-     * @return string
-     */
-    function mix($path, $useParent = false)
-    {
-        $pathWithOutSlash = ltrim($path, '/');
-        $pathWithSlash    = '/'.ltrim($path, '/');
-        $manifestFile     = __m($useParent);
-
-//        No manifest file was found so return whatever was passed to mix().
-        if ( ! $manifestFile) {
-            return __t($useParent).$pathWithOutSlash;
-        }
-
-        $manifestArray = json_decode(file_get_contents($manifestFile), true);
-
-        if (array_key_exists($pathWithSlash, $manifestArray)) {
-            return __t($useParent).ltrim($manifestArray[$pathWithSlash], '/');
-        }
-
-//        No file was found in the manifest, return whatever was passed to mix().
-        return __t($useParent).$pathWithOutSlash;
     }
 }
 
