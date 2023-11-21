@@ -591,3 +591,36 @@ if ( ! function_exists('setBaseDataPath')) {
         }
     }
 }
+
+if (!function_exists('getFeaturedImage')) {
+
+    /**
+     * @param $post_id
+     * @param $size
+     * @return mixed
+     *
+     * getFeaturedImage($post->ID, 'featured');
+     *
+     */
+    function getFeaturedImage($post_id, $size = 'featured')
+    {
+        $thumb_id = get_post_thumbnail_id($post_id);
+        $img = wp_get_attachment_image_src($thumb_id, $size);
+        $meta = get_post_meta($thumb_id);
+
+        // If there's no image, then there's no post meta, return false.
+        if (!$meta && !$img) return false;
+
+        $meta_attachment = unserialize($meta['_wp_attachment_metadata'][0]);
+
+        return [
+            'url'        => $img[0],
+            'width'      => $img[1],
+            'height'     => $img[2],
+            'meta'       => $meta_attachment,
+            'image_meta' => $meta_attachment['image_meta'],
+            //'image_sizes' => $meta_attachment['sizes'],
+            'alt'        => $meta['_wp_attachment_image_alt'][0]
+        ];
+    }
+}
