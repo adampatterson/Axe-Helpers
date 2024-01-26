@@ -2,16 +2,16 @@
     "name": "adampatterson/axe-helpers",
     "description": "Theme Helpers for Axe",
     "keywords": [
-      "WordPress",
-      "helpers"
+        "WordPress",
+        "helpers"
     ],
     "license": "MIT",
     "type": "library",
     "authors": [
-      {
-        "name": "Adam Patterson",
-        "email": "hello@adampatterson.ca"
-      }
+        {
+            "name": "Adam Patterson",
+            "email": "hello@adampatterson.ca"
+        }
     ],
     "support": {
         "issues": "https://github.com/adampatterson/Axe-Helpers/issues",
@@ -22,9 +22,9 @@
     },
     "require": {
         "php": "^7.1.3|^8.0",
-        "nesbot/carbon": "^2.66.0",
-        "tightenco/collect": "^9.29.0",
-        "laravel/helpers": "^v1.6.0"
+        "nesbot/carbon": "^2.72.2",
+        "tightenco/collect": "^v9.52.7",
+        "laravel/helpers": "^v1.7.0"
     },
     "autoload": {
         "files": [
@@ -32,7 +32,7 @@
         ]
     },
     "scripts": {
-      "test": "phpunit"
+        "test": "phpunit"
     }
-  }
+}
 
