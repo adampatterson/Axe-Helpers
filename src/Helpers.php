@@ -188,16 +188,17 @@ if (!function_exists('get_cat_hierarchy')) {
 }
 
 /**
- * @param      $slug
- * @param null $name
- * @param null $data
+ * @param $slug
+ * @param $name
+ * @param $data
+ * @param $block
  *
  * Allows the pass through of data to template partials.
  *
  */
 if (!function_exists('get_acf_part')) {
 
-    function get_acf_part($slug, $name = null)
+    function get_acf_part($slug, $name = null, $data = null, $block = null)
     {
         include(get_template_part_acf($slug, $name));
     }
@@ -413,7 +414,7 @@ if (!function_exists('get_the_logo')) {
      *
      * @return bool|string
      *
-     * Returns an HTML link including the logo, Or just the path the the logo image.
+     * Returns an HTML link including the logo, Or just the path to the logo image.
      */
     function get_the_logo($include_link = false,
                           $custom_logo_css = 'site-logo custom-logo img-fluid',
