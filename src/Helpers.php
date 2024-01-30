@@ -204,6 +204,21 @@ if (!function_exists('get_acf_part')) {
     }
 }
 
+if (!function_exists('get_acf_block')) {
+
+    function get_acf_block($slug, $name = null, $data = null, $block = null)
+    {
+        $file = get_template_part_acf($slug, $name);
+
+        if (file_exists($file)) {
+            include($file);
+        } else {
+            echo "Missing block {$slug}";
+        }
+
+    }
+}
+
 
 /**
  * @param      $slug
