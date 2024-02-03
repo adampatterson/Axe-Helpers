@@ -206,16 +206,25 @@ if (!function_exists('get_acf_part')) {
 
 if (!function_exists('get_acf_block')) {
 
+    /**
+     * @param $slug
+     * @param $name
+     * @param $data
+     * @param $block
+     * @return void
+     */
     function get_acf_block($slug, $name = null, $data = null, $block = null)
     {
         $file = get_template_part_acf($slug, $name);
+
+        $layout = $block['acf_fc_layout'] ?? '';
+        $block = $block['data'] ?? [];
 
         if (file_exists($file)) {
             include($file);
         } else {
             echo "Missing block {$slug}";
         }
-
     }
 }
 
