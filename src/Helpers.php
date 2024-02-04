@@ -215,13 +215,13 @@ if (!function_exists('get_acf_block')) {
      * get_acf_block($block)
      * get_acf_block(path: 'templates/blocks/', block: $block); // custom block path
      */
-    function get_acf_block($block, $data = null, $path = 'templates/blocks/',)
+    function get_acf_block(array $block, $data = null, $path = 'templates/blocks/',)
     {
         $layout = $block['acf_fc_layout'] ?? '';
 
         $file = get_template_part_acf($path . $layout);
 
-        $block = $block['data'] ?? [];
+        $block = $block['data'] ?? $block;
 
         if (file_exists($file)) {
             echo "<!-- template: {$path}{$layout} -->";
