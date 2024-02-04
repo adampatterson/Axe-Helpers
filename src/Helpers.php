@@ -137,39 +137,40 @@ if (!function_exists('__video')) {
     }
 }
 
-/**
- * @param $string
- *
- * @return string
- */
+
 if (!function_exists('underscore')) {
+    /**
+     * @param $string
+     *
+     * @return string
+     */
     function underscore($string)
     {
         return strtolower(preg_replace('/[[:space:]]+/', '_', $string));
     }
 }
 
-/**
- * @param $string
- *
- * @return string
- */
 if (!function_exists('dash')) {
+    /**
+     * @param $string
+     *
+     * @return string
+     */
     function dash($string)
     {
         return strtolower(preg_replace('/[[:space:]]+/', '-', $string));
     }
 }
 
-/**
- * @param $parent
- * @param $args
- *
- * Category list
- *
- * @return array
- */
 if (!function_exists('get_cat_hierarchy')) {
+    /**
+     * @param $parent
+     * @param $args
+     *
+     * Category list
+     *
+     * @return array
+     */
     function get_cat_hierarchy($parent, $args)
     {
         $cats = get_categories($args);
@@ -187,17 +188,16 @@ if (!function_exists('get_cat_hierarchy')) {
     }
 }
 
-/**
- * @param $slug
- * @param $name
- * @param $data
- * @param $block
- *
- * Allows the pass through of data to template partials.
- *
- */
 if (!function_exists('get_acf_part')) {
-
+    /**
+     * @param $slug
+     * @param $name
+     * @param $data
+     * @param $block
+     *
+     * Allows the pass through of data to template partials.
+     *
+     */
     function get_acf_part($slug, $name = null, $data = null, $block = null)
     {
         include(get_template_part_acf($slug, $name));
@@ -205,40 +205,43 @@ if (!function_exists('get_acf_part')) {
 }
 
 if (!function_exists('get_acf_block')) {
-
     /**
-     * @param $slug
-     * @param $name
-     * @param $data
      * @param $block
+     * @param $data
+     * @param $path
      * @return void
+     *
+     * Example Usage:
+     * get_acf_block($block)
+     * get_acf_block(path: 'templates/blocks/', block: $block); // custom block path
      */
-    function get_acf_block($slug, $name = null, $data = null, $block = null)
+    function get_acf_block($block, $data = null, $path = 'templates/blocks/',)
     {
-        $file = get_template_part_acf($slug, $name);
-
         $layout = $block['acf_fc_layout'] ?? '';
+
+        $file = get_template_part_acf($path . $layout);
+
         $block = $block['data'] ?? [];
 
         if (file_exists($file)) {
+            echo "<!-- template: {$path}{$layout} -->";
             include($file);
         } else {
-            echo "Missing block {$slug}";
+            echo "Missing block {$layout}";
         }
     }
 }
 
-
-/**
- * @param      $slug
- * @param null $name
- * @param null $data
- *
- * Allows the pass through of data to template partials.
- *
- * @return string
- */
 if (!function_exists('get_template_part_acf')) {
+    /**
+     * @param      $slug
+     * @param null $name
+     * @param null $data
+     *
+     * Allows the pass through of data to template partials.
+     *
+     * @return string
+     */
     function get_template_part_acf($slug, $name = null)
     {
         $templates = [];
@@ -264,12 +267,12 @@ if (!function_exists('get_template_part_acf')) {
     }
 }
 
-/**
- * @param $template_name
- *
- * @return string
- */
 if (!function_exists('check_path')) {
+    /**
+     * @param $template_name
+     *
+     * @return string
+     */
     function check_path($template_name)
     {
         if (file_exists(get_stylesheet_directory() . '/' . $template_name) or file_exists(get_template_directory() . '/' . $template_name)) {
@@ -280,15 +283,15 @@ if (!function_exists('check_path')) {
     }
 }
 
-/**
- * @param $template_name
- *
- * @return bool|string
- */
 if (!function_exists('template_directory')) {
+    /**
+     * @param $template_name
+     *
+     * @return bool|string
+     */
     function template_directory($template_name)
     {
-        $template_name = trim($template_name, "/");
+        $template_name = trim($template_name, " / ");
 
         if (file_exists(get_stylesheet_directory() . '/' . $template_name)) {
             return get_stylesheet_directory() . '/' . $template_name;
@@ -310,7 +313,7 @@ if (!function_exists('__m')) {
      */
     function __m($useParent)
     {
-        $template_name = "mix-manifest.json";
+        $template_name = "mix - manifest . json";
 
         // Force the Parent Manifest
         if ($useParent and file_exists(get_template_directory() . '/' . $template_name)) {
@@ -428,7 +431,6 @@ if (!function_exists('show_woo_single_product')) {
     }
 }
 
-
 if (!function_exists('get_the_logo')) {
     /**
      * @param bool $include_link
@@ -455,13 +457,12 @@ if (!function_exists('get_the_logo')) {
         $url = esc_url(home_url('/'));
 
         if ($include_link) {
-            return sprintf('<a href="%1$s" class="%2$s" rel="home">%3$s</a>', $url, $custom_link_css, $logo);
+            return sprintf('<a href=" % 1$s" class=" % 2$s" rel="home">%3$s</a>', $url, $custom_link_css, $logo);
         }
 
         return $logo;
     }
 }
-
 
 if (!function_exists('get_the_logo_url')) {
     /**
@@ -587,7 +588,6 @@ if (!function_exists('format_date')) {
 /*
  * Helpers for working with ACF data objects
  */
-
 if (!function_exists('_get')) {
     /**
      * @param $haystack
