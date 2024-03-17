@@ -15,7 +15,7 @@ if (!function_exists('__t')) {
      */
     function __t()
     {
-        return get_template_directory_uri() . '/';
+        return get_template_directory_uri().'/';
     }
 }
 
@@ -27,7 +27,7 @@ if (!function_exists('__p')) {
      */
     function __p()
     {
-        return get_template_directory() . '/';
+        return get_template_directory().'/';
     }
 }
 
@@ -39,7 +39,7 @@ if (!function_exists('__a')) {
      */
     function __a($useParent = false)
     {
-        return __t($useParent) . 'assets/';
+        return __t($useParent).'assets/';
     }
 }
 
@@ -49,7 +49,7 @@ if (!function_exists('__j')) {
      */
     function __j($useParent = false)
     {
-        echo __a($useParent) . 'js/';
+        echo __a($useParent).'js/';
     }
 }
 
@@ -59,7 +59,7 @@ if (!function_exists('__i')) {
      */
     function __i($useParent = false)
     {
-        echo __a($useParent) . 'img/';
+        echo __a($useParent).'img/';
     }
 }
 
@@ -69,7 +69,7 @@ if (!function_exists('__c')) {
      */
     function __c($useParent = false)
     {
-        echo __a($useParent) . 'css/';
+        echo __a($useParent).'css/';
     }
 }
 
@@ -79,7 +79,7 @@ if (!function_exists('__v')) {
      */
     function __v($useParent = false)
     {
-        echo __a($useParent) . 'vendor/';
+        echo __a($useParent).'vendor/';
     }
 }
 
@@ -89,7 +89,7 @@ if (!function_exists('__lib')) {
      */
     function __lib($path)
     {
-        return template_directory('/lib/' . $path);
+        return template_directory('/lib/'.$path);
     }
 }
 
@@ -102,12 +102,12 @@ if (!function_exists('mix')) {
     function mix($path, $useParent = false)
     {
         $pathWithOutSlash = ltrim($path, '/');
-        $pathWithSlash = '/' . ltrim($path, '/');
+        $pathWithSlash = '/'.ltrim($path, '/');
         $manifestFile = __m($useParent);
 
 //        No manifest file was found so return whatever was passed to mix().
         if (!$manifestFile) {
-            return __t($useParent) . $pathWithOutSlash;
+            return __t($useParent).$pathWithOutSlash;
         }
 
         $manifestArray = json_decode(file_get_contents($manifestFile), true);
@@ -120,10 +120,10 @@ if (!function_exists('mix')) {
         */
 
         if (array_key_exists($pathWithSlash, $manifestArray)) {
-            return __t($useParent) . ltrim($manifestArray[$pathWithSlash], '/');
+            return __t($useParent).ltrim($manifestArray[$pathWithSlash], '/');
         }
 //        No file was found in the manifest, return whatever was passed to mix().
-        return __t($useParent) . $pathWithOutSlash;
+        return __t($useParent).$pathWithOutSlash;
     }
 }
 
@@ -133,7 +133,7 @@ if (!function_exists('__video')) {
      */
     function __video($useParent = false)
     {
-        echo __a($useParent) . 'video/';
+        echo __a($useParent).'video/';
     }
 }
 
@@ -184,7 +184,7 @@ if (!function_exists('get_cat_hierarchy')) {
             }
         }
 
-        return (array)$ret;
+        return (array) $ret;
     }
 }
 
@@ -219,7 +219,7 @@ if (!function_exists('get_acf_block')) {
     {
         $layout = $block['acf_fc_layout'] ?? '';
 
-        $file = get_template_part_acf($path . $layout);
+        $file = get_template_part_acf($path.$layout);
 
         $block = $block['data'] ?? $block;
 
@@ -235,8 +235,8 @@ if (!function_exists('get_acf_block')) {
 if (!function_exists('get_template_part_acf')) {
     /**
      * @param      $slug
-     * @param null $name
-     * @param null $data
+     * @param  null  $name
+     * @param  null  $data
      *
      * Allows the pass through of data to template partials.
      *
@@ -245,7 +245,7 @@ if (!function_exists('get_template_part_acf')) {
     function get_template_part_acf($slug, $name = null)
     {
         $templates = [];
-        $name = (string)$name;
+        $name = (string) $name;
 
         if ($name == null) {
             $templates[] = "{$slug}.php";
@@ -254,7 +254,7 @@ if (!function_exists('get_template_part_acf')) {
         }
 
         $located = '';
-        foreach ((array)$templates as $template_name) {
+        foreach ((array) $templates as $template_name) {
             if (!$template_name) {
                 continue;
             }
@@ -275,8 +275,8 @@ if (!function_exists('check_path')) {
      */
     function check_path($template_name)
     {
-        if (file_exists(get_stylesheet_directory() . '/' . $template_name) or file_exists(get_template_directory() . '/' . $template_name)) {
-            return get_template_directory() . '/' . $template_name;
+        if (file_exists(get_stylesheet_directory().'/'.$template_name) or file_exists(get_template_directory().'/'.$template_name)) {
+            return get_template_directory().'/'.$template_name;
         }
 
         return false;
@@ -293,12 +293,12 @@ if (!function_exists('template_directory')) {
     {
         $template_name = trim($template_name, " / ");
 
-        if (file_exists(get_stylesheet_directory() . '/' . $template_name)) {
-            return get_stylesheet_directory() . '/' . $template_name;
+        if (file_exists(get_stylesheet_directory().'/'.$template_name)) {
+            return get_stylesheet_directory().'/'.$template_name;
         }
 
-        if (file_exists(get_template_directory() . '/' . $template_name)) {
-            return get_template_directory() . '/' . $template_name;
+        if (file_exists(get_template_directory().'/'.$template_name)) {
+            return get_template_directory().'/'.$template_name;
         }
 
         return false;
@@ -316,18 +316,18 @@ if (!function_exists('__m')) {
         $template_name = "mix - manifest . json";
 
         // Force the Parent Manifest
-        if ($useParent and file_exists(get_template_directory() . '/' . $template_name)) {
-            return get_template_directory() . '/' . $template_name;
+        if ($useParent and file_exists(get_template_directory().'/'.$template_name)) {
+            return get_template_directory().'/'.$template_name;
         }
 
         // Check the Child Manifest
-        if (file_exists(get_stylesheet_directory() . '/' . $template_name)) {
-            return get_stylesheet_directory() . '/' . $template_name;
+        if (file_exists(get_stylesheet_directory().'/'.$template_name)) {
+            return get_stylesheet_directory().'/'.$template_name;
         }
 
         // Return to the Core Manifest.
-        if (file_exists(get_template_directory() . '/' . $template_name)) {
-            return get_template_directory() . '/' . $template_name;
+        if (file_exists(get_template_directory().'/'.$template_name)) {
+            return get_template_directory().'/'.$template_name;
         }
 
         return false;
@@ -433,21 +433,21 @@ if (!function_exists('show_woo_single_product')) {
 
 if (!function_exists('get_the_logo')) {
     /**
-     * @param bool $include_link
-     * @param string $custom_logo_css
-     * @param string $custom_link_css
-     * @param string $size
+     * @param  bool  $include_link
+     * @param  string  $custom_logo_css
+     * @param  string  $custom_link_css
+     * @param  string  $size
      *
      * @return bool|string
      *
      * Returns an HTML link including the logo, Or just the path to the logo image.
      */
-    function get_the_logo($include_link = false,
-                          $custom_logo_css = 'site-logo custom-logo img-fluid',
-                          $custom_link_css = 'logo custom-logo-link',
-                          $size = 'full'
-    )
-    {
+    function get_the_logo(
+        $include_link = false,
+        $custom_logo_css = 'site-logo custom-logo img-fluid',
+        $custom_link_css = 'logo custom-logo-link',
+        $size = 'full'
+    ) {
         $logo = wp_get_attachment_image(get_theme_mod('custom_logo'), $size, false, ['class' => $custom_logo_css]);
 
         if (!$logo) {
@@ -457,7 +457,7 @@ if (!function_exists('get_the_logo')) {
         $url = esc_url(home_url('/'));
 
         if ($include_link) {
-            return sprintf('<a href=" % 1$s" class=" % 2$s" rel="home">%3$s</a>', $url, $custom_link_css, $logo);
+            return sprintf('<a href="%s" class="%s" rel="home">%s</a>', $url, $custom_link_css, $logo);
         }
 
         return $logo;
@@ -466,7 +466,7 @@ if (!function_exists('get_the_logo')) {
 
 if (!function_exists('get_the_logo_url')) {
     /**
-     * @param string $size
+     * @param  string  $size
      *
      * @return bool|string
      *
@@ -570,7 +570,7 @@ if (!function_exists('make_slug')) {
 if (!function_exists('format_date')) {
     /**
      * @param $date
-     * @param bool $format
+     * @param  bool  $format
      *
      * @return string
      */
@@ -592,7 +592,7 @@ if (!function_exists('_get')) {
     /**
      * @param $haystack
      * @param $needle
-     * @param null $default
+     * @param  null  $default
      *
      * @return mixed
      */
@@ -606,7 +606,7 @@ if (!function_exists('_has')) {
     /**
      * @param $haystack
      * @param $needle
-     * @param false $default
+     * @param  false  $default
      *
      * @return bool|mixed
      */
@@ -626,7 +626,7 @@ if (!function_exists('setBaseDataPath')) {
         /*
          * Current active theme, this could be the child theme
          */
-        if (file_exists(get_stylesheet_directory() . '/lib/data.php')) {
+        if (file_exists(get_stylesheet_directory().'/lib/data.php')) {
             define('__THEME_DATA__', get_stylesheet_directory());
             return;
         }
@@ -635,7 +635,7 @@ if (!function_exists('setBaseDataPath')) {
          * If the child theme does not have a data.php file
          * then we would default to the parent theme.
          */
-        if (file_exists(get_template_directory() . '/lib/data.php')) {
+        if (file_exists(get_template_directory().'/lib/data.php')) {
             define('__THEME_DATA__', get_template_directory());
             return;
         }
@@ -659,7 +659,9 @@ if (!function_exists('getFeaturedImage')) {
         $meta = get_post_meta($thumb_id);
 
         // If there's no image, then there's no post meta, return false.
-        if (!$meta && !$img) return false;
+        if (!$meta && !$img) {
+            return false;
+        }
 
         $meta_attachment = unserialize($meta['_wp_attachment_metadata'][0]);
 
