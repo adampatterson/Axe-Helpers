@@ -200,7 +200,17 @@ if (!function_exists('get_acf_part')) {
      */
     function get_acf_part($slug, $name = null, $data = null, $block = null)
     {
-        include(get_template_part_acf($slug, $name));
+        $include = get_template_part_acf($slug, $name);
+
+        try {
+            if ($include) {
+                include($include);
+            } else {
+                throw new MissingTemplateException("<p>Missing Template: {$slug} {$name}</p>");
+            }
+        } catch (MissingTemplateException $e) {
+            echo $e->getMessage();
+        }
     }
 }
 
@@ -316,7 +326,7 @@ if (!function_exists('__m')) {
         $template_name = "mix - manifest . json";
 
         // Force the Parent Manifest
-        if ($useParent and file_exists(get_template_directory().'/'.$template_name)) {
+        if ($useParent && file_exists(get_template_directory().'/'.$template_name)) {
             return get_template_directory().'/'.$template_name;
         }
 
@@ -331,39 +341,6 @@ if (!function_exists('__m')) {
         }
 
         return false;
-    }
-}
-
-if (!function_exists('dd')) {
-    /**
-     * Var_dump and die method
-     *
-     * @return void
-     */
-    function dd()
-    {
-        echo '<pre>';
-        array_map(function ($x) {
-            var_dump($x);
-        }, func_get_args());
-        echo '</pre>';
-        die;
-    }
-}
-
-if (!function_exists('dump')) {
-    /**
-     * Var_dump method
-     *
-     * @return void
-     */
-    function dump()
-    {
-        echo '<pre>';
-        array_map(function ($x) {
-            var_dump($x);
-        }, func_get_args());
-        echo '</pre>';
     }
 }
 
