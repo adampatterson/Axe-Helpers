@@ -576,9 +576,10 @@ if (!function_exists('_get')) {
      */
     function _get($haystack, $needle, $default = null, bool $defaultIfEmpty = false)
     {
-        if ($defaultIfEmpty) {
-            return _has($haystack, $needle, $default);
+        if ($defaultIfEmpty && Arr::get($haystack, $needle, false) === '') {
+            return $default;
         }
+
         return Arr::get($haystack, $needle, $default);
     }
 }
