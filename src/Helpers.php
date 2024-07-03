@@ -345,39 +345,6 @@ if (!function_exists('__m')) {
     }
 }
 
-if (!function_exists('dd')) {
-    /**
-     * Var_dump and die method
-     *
-     * @return void
-     */
-    function dd()
-    {
-        echo '<pre>';
-        array_map(function ($x) {
-            var_dump($x);
-        }, func_get_args());
-        echo '</pre>';
-        die;
-    }
-}
-
-if (!function_exists('dump')) {
-    /**
-     * Var_dump method
-     *
-     * @return void
-     */
-    function dump()
-    {
-        echo '<pre>';
-        array_map(function ($x) {
-            var_dump($x);
-        }, func_get_args());
-        echo '</pre>';
-    }
-}
-
 if (!function_exists('is_sub_page')) {
     /**
      * @param $post
