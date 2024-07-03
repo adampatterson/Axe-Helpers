@@ -4,6 +4,7 @@
  * https://github.com/adampatterson/Axe
  *****************************************/
 
+use Axe\Exception\MissingTemplateException;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 
@@ -200,7 +201,17 @@ if (!function_exists('get_acf_part')) {
      */
     function get_acf_part($slug, $name = null, $data = null, $block = null)
     {
-        include(get_template_part_acf($slug, $name));
+	    $include = get_template_part_acf( $slug, $name );
+
+	    try {
+		    if ( $include ) {
+			    include( $include );
+		    } else {
+			    throw new MissingTemplateException( "<p>Missing Template: ${slug} ${name}</p>" );
+		    }
+	    } catch ( MissingTemplateException $e ) {
+		    echo $e->getMessage();
+	    }
     }
 }
 
@@ -291,7 +302,7 @@ if (!function_exists('template_directory')) {
      */
     function template_directory($template_name)
     {
-        $template_name = trim($template_name, " / ");
+        $template_name = trim($template_name, "/");
 
         if (file_exists(get_stylesheet_directory().'/'.$template_name)) {
             return get_stylesheet_directory().'/'.$template_name;
@@ -313,10 +324,10 @@ if (!function_exists('__m')) {
      */
     function __m($useParent)
     {
-        $template_name = "mix - manifest . json";
+        $template_name = "mix-manifest.json";
 
         // Force the Parent Manifest
-        if ($useParent and file_exists(get_template_directory().'/'.$template_name)) {
+        if ($useParent && file_exists(get_template_directory().'/'.$template_name)) {
             return get_template_directory().'/'.$template_name;
         }
 
@@ -593,11 +604,14 @@ if (!function_exists('_get')) {
      * @param $haystack
      * @param $needle
      * @param  null  $default
-     *
+     * @param  bool  $showDefaultIfEmpty
      * @return mixed
      */
-    function _get($haystack, $needle, $default = null)
+    function _get($haystack, $needle, $default = null, bool $defaultIfEmpty = false)
     {
+        if ($defaultIfEmpty) {
+            return _has($haystack, $needle, $default);
+        }
         return Arr::get($haystack, $needle, $default);
     }
 }
