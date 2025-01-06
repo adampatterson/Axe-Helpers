@@ -207,7 +207,7 @@ if (!function_exists('get_acf_part')) {
 		    if ( $include ) {
 			    include( $include );
 		    } else {
-			    throw new MissingTemplateException( "<p>Missing Template: ${slug} ${name}</p>" );
+			    throw new MissingTemplateException( "<p>Missing Template: {$slug} {$name}</p>" );
 		    }
 	    } catch ( MissingTemplateException $e ) {
 		    echo $e->getMessage();
